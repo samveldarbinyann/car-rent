@@ -13,5 +13,5 @@ public class Car {
     private String model;
     private int year;
     private double dailyRate;
-    private String status;
+    private CarStatus status;
 }

@@ -10,7 +10,11 @@
     Model: <input type="text" name="model"><br>
     Year: <input type="number" name="year"><br>
     Daily Price: <input type="number" name="dailyRate"><br>
-    Status: <input type="text" name="status"><br><br>
+    Status: <select name="status">
+    <option value="AVAILABLE">Available</option>
+    <option value="RENTED">Rented</option>
+    <option value="MAINTENANCE">Maintenance</option>
+</select><br><br>
     <input type="submit" value="Add Car">
 </form>
 <br>

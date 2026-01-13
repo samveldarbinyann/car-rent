@@ -1,4 +1,5 @@
-<%@ page import="model.Car" %><%--
+<%@ page import="model.Car" %>
+<%@ page import="model.CarStatus" %><%--
   Created by IntelliJ IDEA.
   User: samve
   Date: 12.01.2026
@@ -18,7 +19,12 @@
     Model: <input type="text" name="model" value="<%=car.getModel()%>"><br>
     Year: <input type="number" name="year" value="<%=car.getYear()%>"><br>
     Daily Price: <input type="number" name="dailyRate" value="<%=car.getDailyRate()%>"><br>
-    Status: <input type="text" name="status" value="<%=car.getStatus()%>"><br>
+    Status: Status:
+    <select name="status">
+        <option value="AVAILABLE" <%= car.getStatus() == CarStatus.AVAILABLE ? "selected" : "" %>>Available</option>
+        <option value="RENTED" <%= car.getStatus() == CarStatus.RENTED ? "selected" : "" %>>Rented</option>
+        <option value="MAINTENANCE" <%= car.getStatus() == CarStatus.MAINTENANCE ? "selected" : "" %>>Maintenance</option>
+    </select><br><br>
     <input type="submit" value="Change">
 </form>
 <a href="cars">Back</a>

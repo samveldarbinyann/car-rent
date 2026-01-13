@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Car;
+import model.CarStatus;
 import service.CarService;
 
 import java.io.IOException;
@@ -33,7 +34,9 @@ public class AddCarsServlet extends HttpServlet {
         car.setModel(model);
         car.setYear(year);
         car.setDailyRate(dailyRate);
-        car.setStatus(status);
+        if(status != null){
+            car.setStatus(CarStatus.valueOf(status.toUpperCase()));
+        }
         carService.addCar(car);
         resp.sendRedirect("cars");
     }

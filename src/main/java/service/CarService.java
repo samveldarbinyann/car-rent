@@ -2,6 +2,7 @@ package service;
 
 import db.DBConnectionProvider;
 import model.Car;
+import model.CarStatus;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class CarService {
             statement.setString(2, car.getModel());
             statement.setInt(3, car.getYear());
             statement.setDouble(4, car.getDailyRate());
-            statement.setString(5, car.getStatus());
+            statement.setString(5, car.getStatus().name());
             statement.executeUpdate();
             ResultSet rs = statement.getGeneratedKeys();
             if(rs.next()) {
@@ -46,7 +47,7 @@ public class CarService {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if(rs.next()) {
-                return new Car(rs.getInt("id"), rs.getString("brand"), rs.getString("model"), rs.getInt("year"), rs.getDouble("daily_rate"), rs.getString("status"));
+                return new Car(rs.getInt("id"), rs.getString("brand"), rs.getString("model"), rs.getInt("year"), rs.getDouble("daily_rate"), CarStatus.valueOf(rs.getString("status")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -61,7 +62,7 @@ public class CarService {
             statement.setString(2, car.getModel());
             statement.setInt(3, car.getYear());
             statement.setDouble(4, car.getDailyRate());
-            statement.setString(5, car.getStatus());
+            statement.setString(5, car.getStatus().name());
             statement.setInt(6, car.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -75,7 +76,7 @@ public class CarService {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                cars.add(new Car(rs.getInt("id"), rs.getString("brand"), rs.getString("model"), rs.getInt("year"), rs.getDouble("daily_rate"), rs.getString("status")));
+                cars.add(new Car(rs.getInt("id"), rs.getString("brand"), rs.getString("model"), rs.getInt("year"), rs.getDouble("daily_rate"), CarStatus.valueOf(rs.getString("status"))));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,7 +90,7 @@ public class CarService {
             ResultSet rs = statement.executeQuery();
             List<Car> cars = new ArrayList<>();
             while (rs.next()) {
-                cars.add(new Car(rs.getInt("id"), rs.getString("brand"), rs.getString("model"), rs.getInt("year"), rs.getDouble("daily_rate"), rs.getString("status")));
+                cars.add(new Car(rs.getInt("id"), rs.getString("brand"), rs.getString("model"), rs.getInt("year"), rs.getDouble("daily_rate"), CarStatus.valueOf(rs.getString("status"))));
             }
             return cars;
         } catch (SQLException e) {
