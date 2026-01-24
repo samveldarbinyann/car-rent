@@ -12,6 +12,7 @@ import java.io.IOException;
 @WebServlet("/deleteCar")
 public class DeleteCarsServlet extends HttpServlet {
     private CarService carService = new CarService();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));

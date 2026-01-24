@@ -18,7 +18,7 @@ public class ChangeCustomersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         req.setAttribute("customers", customerService.getCustomerById(id));
-        req.getRequestDispatcher("changeCustomers.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/changeCustomers.jsp").forward(req, resp);
     }
 
     @Override

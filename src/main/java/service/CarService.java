@@ -13,7 +13,7 @@ public class CarService {
     private Connection connection = DBConnectionProvider.getInstance().getConnection();
 
     public void addCar(Car car) {
-        String sql = "INSERT INTO `car` (brand, model, year, daily_rate, status) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO `car` (brand, model, year, daily_rate, status, picture_name) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, car.getBrand());
@@ -21,6 +21,7 @@ public class CarService {
             statement.setInt(3, car.getYear());
             statement.setDouble(4, car.getDailyRate());
             statement.setString(5, car.getStatus().name());
+            statement.setString(6, car.getPictureName());
             statement.executeUpdate();
             ResultSet rs = statement.getGeneratedKeys();
             if(rs.next()) {
@@ -47,7 +48,15 @@ public class CarService {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if(rs.next()) {
-                return new Car(rs.getInt("id"), rs.getString("brand"), rs.getString("model"), rs.getInt("year"), rs.getDouble("daily_rate"), CarStatus.valueOf(rs.getString("status")));
+                return new Car(
+                        rs.getInt("id"),
+                        rs.getString("brand"),
+                        rs.getString("model"),
+                        rs.getInt("year"),
+                        rs.getDouble("daily_rate"),
+                        CarStatus.valueOf(rs.getString("status")),
+                        rs.getString("picture_name")
+                );
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,14 +65,15 @@ public class CarService {
     }
 
     public void updateCar(Car car) {
-        String sql = "UPDATE `car` SET brand = ?, model = ?, year = ?, daily_rate = ?, status = ? WHERE id = ?";
+        String sql = "UPDATE `car` SET brand = ?, model = ?, year = ?, daily_rate = ?, status = ?, picture_name = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, car.getBrand());
             statement.setString(2, car.getModel());
             statement.setInt(3, car.getYear());
             statement.setDouble(4, car.getDailyRate());
             statement.setString(5, car.getStatus().name());
-            statement.setInt(6, car.getId());
+            statement.setString(6, car.getPictureName());
+            statement.setInt(7, car.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,7 +86,7 @@ public class CarService {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                cars.add(new Car(rs.getInt("id"), rs.getString("brand"), rs.getString("model"), rs.getInt("year"), rs.getDouble("daily_rate"), CarStatus.valueOf(rs.getString("status"))));
+                cars.add(new Car(rs.getInt("id"), rs.getString("brand"), rs.getString("model"), rs.getInt("year"), rs.getDouble("daily_rate"), CarStatus.valueOf(rs.getString("status")), rs.getString("picture_name")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -90,7 +100,7 @@ public class CarService {
             ResultSet rs = statement.executeQuery();
             List<Car> cars = new ArrayList<>();
             while (rs.next()) {
-                cars.add(new Car(rs.getInt("id"), rs.getString("brand"), rs.getString("model"), rs.getInt("year"), rs.getDouble("daily_rate"), CarStatus.valueOf(rs.getString("status"))));
+                cars.add(new Car(rs.getInt("id"), rs.getString("brand"), rs.getString("model"), rs.getInt("year"), rs.getDouble("daily_rate"), CarStatus.valueOf(rs.getString("status")), rs.getString("picture_name")));
             }
             return cars;
         } catch (SQLException e) {

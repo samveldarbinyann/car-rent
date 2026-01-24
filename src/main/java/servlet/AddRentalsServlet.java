@@ -30,7 +30,7 @@ public class AddRentalsServlet extends HttpServlet {
         
         req.setAttribute("cars", cars);
         req.setAttribute("customers", customers);
-        req.getRequestDispatcher("addRentals.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/addRentals.jsp").forward(req, resp);
     }
 
     @Override

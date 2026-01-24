@@ -10,13 +10,13 @@ import service.CustomerService;
 
 import java.io.IOException;
 
-@WebServlet("/addCustomer")
+@WebServlet("/addCustomers")
 public class AddCustomersServlet extends HttpServlet {
     private CustomerService customerService = new CustomerService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/addCustomers.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/addCustomers.jsp").forward(req, resp);
     }
 
     @Override
